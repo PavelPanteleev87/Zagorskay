@@ -1,0 +1,1186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Symbolconfiguration xmlns="http://www.3s-software.com/schemas/Symbolconfiguration.xsd">
+  <Header>
+    <Version>3.5.14.0</Version>
+    <SymbolConfigObject version="3.5.16.30" runtimeid="3.5.10.30" libversion="3.5.16.0" compiler="3.5.16.30" lmm="3.5.16.0" profile="CODESYS V3.5 SP16 Patch 3+" settings="SupportOPCUA, IncludeComments, IncludeAttributes, IncludeTypeNodeAttributes, XmlIncludeNodeFlags, XmlIncludeComments, XmlIncludeAttributes, XmlIncludeTypeNodeAttributes, SymbolAttributeFilterType.All, SymbolCommentFilterType.PreferDocuComments, LayoutCalculator=OptimizedClientSideLayoutCalculator" />
+    <ProjectInfo name="Limonad_ИЗМ18(на железе)_17.08" devicename="Device" appname="Application" />
+  </Header>
+  <TypeList>
+    <TypeSimple name="T_BOOL" size="1" swapsize="0" typeclass="Bool" iecname="BOOL" />
+    <TypeSimple name="T_BYTE" size="1" swapsize="1" typeclass="Byte" iecname="BYTE" />
+    <TypeSimple name="T_DINT" size="4" swapsize="4" typeclass="DInt" iecname="DINT" />
+    <TypeSimple name="T_DWORD" size="4" swapsize="4" typeclass="DWord" iecname="DWORD" />
+    <TypeSimple name="T_INT" size="2" swapsize="2" typeclass="Int" iecname="INT" />
+    <TypeSimple name="T_REAL" size="4" swapsize="4" typeclass="Real" iecname="REAL" />
+    <TypeSimple name="T_SINT" size="1" swapsize="1" typeclass="SInt" iecname="SINT" />
+    <TypeSimple name="T_TIME" size="4" swapsize="4" typeclass="Time" iecname="TIME" />
+    <TypeSimple name="T_UDINT" size="4" swapsize="4" typeclass="UDInt" iecname="UDINT" />
+    <TypeSimple name="T_UINT" size="2" swapsize="2" typeclass="UInt" iecname="UINT" />
+    <TypeSimple name="T_WORD" size="2" swapsize="2" typeclass="Word" iecname="WORD" />
+    <TypeUserDef name="T_AnalogOutputs" size="20" nativesize="20" typeclass="Userdef" pouclass="STRUCTURE" iecname="AnalogOutputs">
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="0" vartype="VAR" />
+      <UserDefElement iecname="start" type="T_BOOL" byteoffset="1" vartype="VAR" />
+      <UserDefElement iecname="out" type="T_BOOL" byteoffset="2" vartype="VAR" />
+      <UserDefElement iecname="input" type="T_REAL" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="setpoint" type="T_REAL" byteoffset="8" vartype="VAR" />
+      <UserDefElement iecname="value" type="T_INT" byteoffset="12" vartype="VAR" />
+      <UserDefElement iecname="manualValue" type="T_INT" byteoffset="14" vartype="VAR" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="16" vartype="VAR" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="18" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_AnalogSensors" size="26" nativesize="28" typeclass="Userdef" pouclass="STRUCTURE" iecname="AnalogSensors">
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="0" vartype="VAR" />
+      <UserDefElement iecname="manualInput" type="T_REAL" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="value" type="T_REAL" byteoffset="8" vartype="VAR" />
+      <UserDefElement iecname="highLimit" type="T_REAL" byteoffset="12" vartype="VAR" />
+      <UserDefElement iecname="lowLimit" type="T_REAL" byteoffset="16" vartype="VAR" />
+      <UserDefElement iecname="input" type="T_INT" byteoffset="20" vartype="VAR" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="22" vartype="VAR" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="24" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_CTU" size="8" nativesize="16" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="CTU">
+      <Comment> Increments a given value
+
+ .. cds:ranges::
+
+     :CU: [TRUE,FALSE]
+     :~CU_OLD: [TRUE,FALSE]
+     :RESET: [TRUE,FALSE]
+     :PV: [0..65535]
+     :Q: [TRUE,FALSE]
+     :CV: [0..65534,65535]
+     :~CV_OLD: [0..65534,65535]
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    CTUInst : CTU ;
+
+    (* Example in ST *)
+    CTUInst(CU:= VarBOOL1, RESET:=VarBOOL2 , PV:= VarWORD1);
+    VarBOOL3 := CTUInst.Q ;
+    VarWORD2 := CTUInst.CV;
+</Comment>
+      <Attribute>hide_all_locals:=</Attribute>
+      <UserDefElement iecname="CU" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Rising edge: Incrementing ``CV`` by one</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="RESET" type="T_BOOL" byteoffset="1" vartype="VAR_INPUT">
+        <Comment> ``TRUE``: Reset ``CV`` to 0</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="PV" type="T_WORD" byteoffset="2" vartype="VAR_INPUT">
+        <Comment> Upper limit for incrementing</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q" type="T_BOOL" byteoffset="4" vartype="VAR_OUTPUT">
+        <Comment> ``TRUE`` if ``CV &gt;= PV``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="CV" type="T_WORD" byteoffset="6" vartype="VAR_OUTPUT">
+        <Comment> Current counter value</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_Counters" size="10" nativesize="10" typeclass="Userdef" pouclass="STRUCTURE" iecname="Counters">
+      <UserDefElement iecname="inputPulse" type="T_BOOL" byteoffset="0" vartype="VAR" />
+      <UserDefElement iecname="setpoint" type="T_INT" byteoffset="2" vartype="VAR" />
+      <UserDefElement iecname="currentValue" type="T_INT" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="status" type="T_INT" byteoffset="6" vartype="VAR" />
+      <UserDefElement iecname="done" type="T_BOOL" byteoffset="8" vartype="VAR" />
+      <UserDefElement iecname="reset" type="T_BOOL" byteoffset="9" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_DERIVATIVE" size="37" nativesize="44" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="DERIVATIVE">
+      <Comment> Approximates the derivative of a given value in its time course
+
+ Four consecutive values are recorded and used in the calculation so that the resulting 
+ derivative is as accurate as possible.
+
+ Example: Function block in FBD
+
+ .. image:: @(Derivative)</Comment>
+      <UserDefElement iecname="IN" type="T_REAL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Input value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="TM" type="T_DWORD" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Time since last call in msec</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="RESET" type="T_BOOL" byteoffset="8" vartype="VAR_INPUT">
+        <Comment> ``TRUE``: ``OUT`` is set to zero and saved values are set to the current input ``IN``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OUT" type="T_REAL" byteoffset="12" vartype="VAR_OUTPUT">
+        <Comment> Derivative</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="X3" type="T_REAL" byteoffset="16" vartype="VAR" />
+      <UserDefElement iecname="X2" type="T_REAL" byteoffset="20" vartype="VAR" />
+      <UserDefElement iecname="X1" type="T_REAL" byteoffset="24" vartype="VAR" />
+      <UserDefElement iecname="T2" type="T_DWORD" byteoffset="28" vartype="VAR" />
+      <UserDefElement iecname="T1" type="T_DWORD" byteoffset="32" vartype="VAR" />
+      <UserDefElement iecname="_Init" type="T_BOOL" byteoffset="36" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_DigitalOutputs" size="16" nativesize="16" typeclass="Userdef" pouclass="STRUCTURE" iecname="DigitalOutputs">
+      <UserDefElement iecname="input" type="T_BOOL" byteoffset="0" vartype="VAR" />
+      <UserDefElement iecname="manualInput" type="T_BOOL" byteoffset="1" vartype="VAR" />
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="2" vartype="VAR" />
+      <UserDefElement iecname="feedBack" type="T_BOOL" byteoffset="3" vartype="VAR" />
+      <UserDefElement iecname="value" type="T_BOOL" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="delay" type="T_REAL" byteoffset="8" vartype="VAR" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="12" vartype="VAR" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="14" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_DigitalSensors" size="12" nativesize="12" typeclass="Userdef" pouclass="STRUCTURE" iecname="DigitalSensors">
+      <UserDefElement iecname="input" type="T_BOOL" byteoffset="0" vartype="VAR" />
+      <UserDefElement iecname="manualInput" type="T_BOOL" byteoffset="1" vartype="VAR" />
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="2" vartype="VAR" />
+      <UserDefElement iecname="value" type="T_BOOL" byteoffset="3" vartype="VAR" />
+      <UserDefElement iecname="delay" type="T_REAL" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="8" vartype="VAR" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="10" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_F_TRIG" size="2" nativesize="8" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="F_TRIG">
+      <Comment> Detects a falling edge of a boolean signal
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    FTRIGInst : F_TRIG ;
+
+    (* Example in ST *)
+    FTRIGInst(CLK := VarBOOL1);
+    VarBOOL2 := FTRIGInst.Q;
+
+ .. cds:ranges::
+
+     :CLK: [TRUE,FALSE]
+     :~CLK_OLD: [TRUE,FALSE]
+     :Q: [TRUE,FALSE]
+</Comment>
+      <Attribute>hide_all_locals:=</Attribute>
+      <UserDefElement iecname="CLK" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Boolean signal to be checked</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q" type="T_BOOL" byteoffset="1" vartype="VAR_OUTPUT">
+        <Comment> ``TRUE``: Falling edge detected</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_HYSTERESIS" size="7" nativesize="12" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="HYSTERESIS">
+      <Comment>  Realizes a hysteresis function
+
+ .. image:: @(Hysteresis)</Comment>
+      <UserDefElement iecname="IN" type="T_INT" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Input value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="HIGH" type="T_INT" byteoffset="2" vartype="VAR_INPUT">
+        <Comment> Upper limit</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="LOW" type="T_INT" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Lower limit</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OUT" type="T_BOOL" byteoffset="6" vartype="VAR_OUTPUT">
+        <Comment> | ``TRUE``: Input ``IN`` is less than input ``LOW``
+ | ``FALSE``: Input ``IN`` is greater than input ``HIGH``</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_INTEGRAL" size="17" nativesize="24" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="INTEGRAL">
+      <Comment> determines approximately the integral over time.
+
+ Example: Function block in FBD
+
+ .. image:: @(Integral)</Comment>
+      <UserDefElement iecname="IN" type="T_REAL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Input value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="TM" type="T_DWORD" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Time since last call in msec</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="RESET" type="T_BOOL" byteoffset="8" vartype="VAR_INPUT">
+        <Comment> ``TRUE``: ``OUT`` is set to zero and ``OVERFLOW`` to ``FALSE``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OUT" type="T_REAL" byteoffset="12" vartype="VAR_OUTPUT">
+        <Comment> Value of the integral. This is done by summing all part integrals ``IN * TM``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OVERFLOW" type="T_BOOL" byteoffset="16" vartype="VAR_OUTPUT">
+        <Comment> ``TRUE``: The value of ``OUT`` is out of range of REAL variables. he function is blocked till
+ it is new initialised by input ``RESET``.</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_LIN_TRAFO" size="32" nativesize="36" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="LIN_TRAFO">
+      <Comment> Performs a linear transformation
+
+ The transformation is performed by using the minimum and maximum values 
+ of the inputs for a linear approximation of the output value.
+
+ .. admonition:: Application example:
+
+    A temperature sensor provides Volt-values (input ``IN``). These are to be converted to temperature
+    values in degree centigrade (output ``OUT``). The input (Volt) values range is defined by the
+    limits ``IN_MIN=0`` and ``IN_MAX=10``. The output(degree centigrade) value range is defined by the
+    limits ``OUT_MIN=-20`` and ``OUT_MAX=40``. 
+    Thus for an input of 5 Volt a temperature of 10 degree centigrade will result. </Comment>
+      <UserDefElement iecname="IN" type="T_REAL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Input value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="IN_MIN" type="T_REAL" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Minimum input value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="IN_MAX" type="T_REAL" byteoffset="8" vartype="VAR_INPUT">
+        <Comment> Maximum input value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OUT_MIN" type="T_REAL" byteoffset="12" vartype="VAR_INPUT">
+        <Comment> Corresponding minimum output value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OUT_MAX" type="T_REAL" byteoffset="16" vartype="VAR_INPUT">
+        <Comment> Corresponding maximum output value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OUT" type="T_REAL" byteoffset="20" vartype="VAR_OUTPUT">
+        <Comment> Output value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="ERROR" type="T_BOOL" byteoffset="24" vartype="VAR_OUTPUT">
+        <Comment> ``TRUE``: ``IN_MIN`` = ``IN_MAX`` or ``IN`` out of input range</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Diff" type="T_REAL" byteoffset="28" vartype="VAR" />
+    </TypeUserDef>
+    <TypeSimple name="T_POINTER_TO_BYTE" size="4" swapsize="4" typeclass="Pointer" iecname="POINTER TO BYTE" />
+    <TypeSimple name="T_POINTER_TO_IoConfigChannelMap" size="4" swapsize="4" typeclass="Pointer" iecname="POINTER TO IoConfigChannelMap" />
+    <TypeSimple name="T_POINTER_TO_IoConfigConnector" size="4" swapsize="4" typeclass="Pointer" iecname="POINTER TO IoConfigConnector" />
+    <TypeSimple name="T_POINTER_TO_IoConfigConnectorMap" size="4" swapsize="4" typeclass="Pointer" iecname="POINTER TO IoConfigConnectorMap" />
+    <TypeSimple name="T_POINTER_TO_IoConfigParameter" size="4" swapsize="4" typeclass="Pointer" iecname="POINTER TO IoConfigParameter" />
+    <TypeSimple name="T_POINTER_TO_IoConfigTaskMap" size="4" swapsize="4" typeclass="Pointer" iecname="POINTER TO IoConfigTaskMap" />
+    <TypeUserDef name="T_Pump" size="12" nativesize="16" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="Pump">
+      <UserDefElement iecname="start" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="1" vartype="VAR_INPUT" />
+      <UserDefElement iecname="input" type="T_INT" byteoffset="2" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualInput" type="T_INT" byteoffset="4" vartype="VAR_INPUT" />
+      <UserDefElement iecname="value" type="T_INT" byteoffset="6" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="8" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="10" vartype="VAR_OUTPUT" />
+    </TypeUserDef>
+    <TypeUserDef name="T_Pumps" size="14" nativesize="14" typeclass="Userdef" pouclass="STRUCTURE" iecname="Pumps">
+      <UserDefElement iecname="start" type="T_BOOL" byteoffset="0" vartype="VAR" />
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="1" vartype="VAR" />
+      <UserDefElement iecname="input" type="T_INT" byteoffset="2" vartype="VAR" />
+      <UserDefElement iecname="manualInput" type="T_INT" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="value" type="T_INT" byteoffset="6" vartype="VAR" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="8" vartype="VAR" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="10" vartype="VAR" />
+      <UserDefElement iecname="commandWord" type="T_UINT" byteoffset="12" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_RS" size="3" nativesize="8" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="RS">
+      <Comment> Realizes a bistable reset-dominat latch
+
+ .. cds:ranges::
+
+     :SET: [TRUE,FALSE]
+     :RESET1: [TRUE,FALSE]
+     :~Q1_IN: [TRUE,FALSE]
+     :Q1: [TRUE,FALSE]
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    RSInst : RS ;
+
+    (* Example in ST *)
+    RSInst(SET:= VarBOOL1 , RESET1:=VarBOOL2 );
+    VarBOOL3 := RSInst.Q1 ;
+</Comment>
+      <UserDefElement iecname="SET" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Rising edge: Set ``Q1`` to ``TRUE``   </Comment>
+      </UserDefElement>
+      <UserDefElement iecname="RESET1" type="T_BOOL" byteoffset="1" vartype="VAR_INPUT">
+        <Comment> Rising edge: Reset ``Q1`` to ``FALSE`` (dominant)</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q1" type="T_BOOL" byteoffset="2" vartype="VAR_OUTPUT">
+        <Comment> Output value</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_R_TRIG" size="2" nativesize="8" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="R_TRIG">
+      <Comment> Detects a rising edge of a boolean signal
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    RTRIGInst : R_TRIG ;
+
+    (* Example in ST *)
+    RTRIGInst(CLK := VarBOOL1);
+    VarBOOL2 := RTRIGInst.Q;
+
+ .. cds:ranges::
+
+     :CLK: [TRUE,FALSE]
+     :~CLK_OLD: [TRUE,FALSE]
+     :Q: [TRUE,FALSE]
+</Comment>
+      <Attribute>hide_all_locals:=</Attribute>
+      <UserDefElement iecname="CLK" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Boolean signal to be checked</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q" type="T_BOOL" byteoffset="1" vartype="VAR_OUTPUT">
+        <Comment> ``TRUE``: Rising edge detected</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_SR" size="3" nativesize="8" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="SR">
+      <Comment> Realizes a bistable set-dominat latch
+ 
+ .. cds:ranges::
+
+     :SET1: [TRUE,FALSE]
+     :RESET: [TRUE,FALSE]
+     :~Q1_IN: [TRUE,FALSE]
+     :Q1: [TRUE,FALSE]
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    SRInst : SR;
+
+    (* Example in ST *)
+    SRInst(SET1:= VarBOOL1 , RESET:=VarBOOL2 );
+    VarBOOL3 := SRInst.Q1 ;
+</Comment>
+      <UserDefElement iecname="SET1" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Rising edge: Set ``Q1`` to ``TRUE`` (dominant)  </Comment>
+      </UserDefElement>
+      <UserDefElement iecname="RESET" type="T_BOOL" byteoffset="1" vartype="VAR_INPUT">
+        <Comment> Rising edge: Reset ``Q1`` to ``FALSE``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q1" type="T_BOOL" byteoffset="2" vartype="VAR_OUTPUT">
+        <Comment> Output value</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_TOF" size="16" nativesize="28" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="TOF">
+      <Comment> Implements a timer with a turn-off delay
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    TOFInst : TOF ;
+
+    (* Example in ST *)
+    TOFInst(IN := VarBOOL1, PT:= T#5s);
+    VarBOOL2 := TOFInst.Q;
+
+ .. image:: @(Tof)
+
+ .. cds:ranges::
+
+     :IN: [TRUE,FALSE]
+     :PT: [0..255]
+     :~PT_OLD: [0..255]
+     :Q: [TRUE,FALSE]
+     :ET: [0..4294967295]
+</Comment>
+      <Attribute>hide_all_locals:=</Attribute>
+      <UserDefElement iecname="IN" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> | Falling edge: starts delay counter
+ | Rising edge: resets delay counter</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="PT" type="T_TIME" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Time for the delay counter [ms]</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q" type="T_BOOL" byteoffset="8" vartype="VAR_OUTPUT">
+        <Comment> | ``TRUE`` if ``IN`` is ``TRUE``
+ | ``FALSE`` if ``IN`` is ``FALSE`` and delay time ``PT`` elapsed</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="ET" type="T_TIME" byteoffset="12" vartype="VAR_OUTPUT">
+        <Comment> Elapsed time since falling edge at ``IN``</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_TON" size="16" nativesize="28" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="TON">
+      <Comment> Implements a timer with a turn-on delay
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    TONInst : TON ;
+
+    (* Example in ST *)
+    TONInst(IN := VarBOOL1, PT:= T#5s);
+    VarBOOL2 := TONInst.Q;
+
+ .. image:: @(Ton)
+
+ .. cds:ranges::
+
+     :IN: [TRUE,FALSE]
+     :PT: [0..255]
+     :~PT_OLD: [0..255]
+     :Q: [TRUE,FALSE]
+     :ET: [0..4294967295]
+</Comment>
+      <Attribute>hide_all_locals:=</Attribute>
+      <UserDefElement iecname="IN" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> | Rising edge: starts delay counter
+ | Falling edge: resets delay counter</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="PT" type="T_TIME" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Time for the delay counter [ms]    </Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q" type="T_BOOL" byteoffset="8" vartype="VAR_OUTPUT">
+        <Comment> | ``FALSE`` if ``IN`` is ``FALSE``
+ | ``TRUE`` if ``IN`` is ``TRUE`` and delay time ``PT`` elapsed</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="ET" type="T_TIME" byteoffset="12" vartype="VAR_OUTPUT">
+        <Comment> Elapsed time since rising edge at ``IN``</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_TP" size="16" nativesize="24" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="TP">
+      <Comment> Implements a pulse timer
+
+ .. code-block:: codesys
+
+    (* Example declaration *)
+    TPInst : TP ;
+
+    (* Example in ST *)
+    TPInst(IN := VarBOOL1, PT:= T#5s);
+    VarBOOL2 := TPInst.Q;
+
+ .. image:: @(Tp)
+
+ .. cds:ranges::
+
+     :IN: [TRUE,FALSE]
+     :PT: [0..255]
+     :~PT_OLD: [0..255]
+     :Q: [TRUE,FALSE]
+     :ET: [0..4294967295]
+</Comment>
+      <Attribute>hide_all_locals:=</Attribute>
+      <UserDefElement iecname="IN" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Rising edge starts the pulse timer and sets ``Q`` to ``TRUE``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="PT" type="T_TIME" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Length of the pulse (high-signal) </Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Q" type="T_BOOL" byteoffset="8" vartype="VAR_OUTPUT">
+        <Comment>	Pulse signal, set to ``TRUE`` for ``PT`` milliseconds if ``EN`` has a rising edge</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="ET" type="T_TIME" byteoffset="12" vartype="VAR_OUTPUT">
+        <Comment>	Elapsed time since pulse timer started. It will then remain constant after ``PT`` is reached.</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_VERSION" size="8" nativesize="8" typeclass="Userdef" pouclass="STRUCTURE" iecname="VERSION">
+      <UserDefElement iecname="uiMajor" type="T_UINT" byteoffset="0" vartype="VAR" />
+      <UserDefElement iecname="uiMinor" type="T_UINT" byteoffset="2" vartype="VAR" />
+      <UserDefElement iecname="uiServicePack" type="T_UINT" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="uiPatch" type="T_UINT" byteoffset="6" vartype="VAR" />
+    </TypeUserDef>
+    <TypeSimple name="T_XWORD" size="4" swapsize="4" typeclass="DWord" iecname="XWORD" aliasedtype="T_DWORD" aliasediecname="DWORD" />
+    <TypeUserDef name="T_AnalogSensor" size="60" nativesize="68" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="AnalogSensor">
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualInput" type="T_REAL" byteoffset="4" vartype="VAR_INPUT" />
+      <UserDefElement iecname="input" type="T_INT" byteoffset="8" vartype="VAR_INPUT" />
+      <UserDefElement iecname="highLimit" type="T_REAL" byteoffset="12" vartype="VAR_INPUT" />
+      <UserDefElement iecname="lowLimit" type="T_REAL" byteoffset="16" vartype="VAR_INPUT" />
+      <UserDefElement iecname="value" type="T_REAL" byteoffset="20" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="24" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="26" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="scale" type="T_LIN_TRAFO" byteoffset="28" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_BLINK" size="32" nativesize="44" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="BLINK">
+      <Comment> Simulates a blinking signal (turning on and off for specific durations)</Comment>
+      <UserDefElement iecname="ENABLE" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> | ``TRUE``: Starts blinking
+ | ``FALSE``: Stops blinking whereas ``OUT`` keeps its value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="TIMELOW" type="T_TIME" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Time for ``OUT`` to be ``FALSE``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="TIMEHIGH" type="T_TIME" byteoffset="8" vartype="VAR_INPUT">
+        <Comment> Time for ``OUT`` to be ``TRUE``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OUT" type="T_BOOL" byteoffset="12" vartype="VAR_OUTPUT">
+        <Comment> Output value, starts with ``FALSE`` and switches between ``TRUE`` and ``FALSE`` for the given high and low times</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="CLOCK" type="T_TP" byteoffset="16" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_DigitalOutput" size="36" nativesize="52" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="DigitalOutput">
+      <UserDefElement iecname="input" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualInput" type="T_BOOL" byteoffset="1" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="2" vartype="VAR_INPUT" />
+      <UserDefElement iecname="feedBack" type="T_BOOL" byteoffset="3" vartype="VAR_INPUT" />
+      <UserDefElement iecname="delay" type="T_REAL" byteoffset="4" vartype="VAR_INPUT" />
+      <UserDefElement iecname="value" type="T_BOOL" byteoffset="8" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="10" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="12" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="t" type="T_TIME" byteoffset="16" vartype="VAR" />
+      <UserDefElement iecname="timer" type="T_TON" byteoffset="20" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_DigitalSensor" size="52" nativesize="80" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="DigitalSensor">
+      <UserDefElement iecname="input" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualInput" type="T_BOOL" byteoffset="1" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="2" vartype="VAR_INPUT" />
+      <UserDefElement iecname="delay" type="T_REAL" byteoffset="4" vartype="VAR_INPUT" />
+      <UserDefElement iecname="value" type="T_BOOL" byteoffset="8" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="10" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="12" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="t" type="T_TIME" byteoffset="16" vartype="VAR" />
+      <UserDefElement iecname="timer_On" type="T_TON" byteoffset="20" vartype="VAR" />
+      <UserDefElement iecname="timer_Off" type="T_TOF" byteoffset="36" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_IoConfigChannelMap" size="20" nativesize="20" typeclass="Userdef" pouclass="STRUCTURE" iecname="IoConfigChannelMap">
+      <Comment>	Mapping information for a single channel. Every I/O-channel is described as a parameter, but with special meanings. The datatype of a channel can be simple (BOOL, BYTE, WORD, etc.) or array of simple types.</Comment>
+      <UserDefElement iecname="pParameter" type="T_POINTER_TO_IoConfigParameter" byteoffset="0" vartype="VAR">
+        <Comment> Pointer to the parameter description.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="pbyIecAddress" type="T_POINTER_TO_BYTE" byteoffset="4" vartype="VAR">
+        <Comment> Pointer to the parameter in the process image on the IEC side.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wParameterBitOffset" type="T_WORD" byteoffset="8" vartype="VAR">
+        <Comment> Bitoffset of the device.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wIecAddressBitOffset" type="T_WORD" byteoffset="10" vartype="VAR">
+        <Comment> Bitoffset of pbyIecAddress in the IEC process image.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wSize" type="T_WORD" byteoffset="12" vartype="VAR">
+        <Comment> Size in bits of the channel.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wDummy" type="T_WORD" byteoffset="14" vartype="VAR">
+        <Comment> This parameter is now used for the base type information. This information is needed for a correct swapping action. -- wBaseTypeInformation : WORD; -- compiler relies on the name 'wDummy' here</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwDriverSpecific" type="T_XWORD" byteoffset="16" vartype="VAR">
+        <Comment> Driver specific entry. Reserved for the usage in the driver.</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_IoConfigConnectorMap" size="16" nativesize="16" typeclass="Userdef" pouclass="STRUCTURE" iecname="IoConfigConnectorMap">
+      <Comment>	Connector map to describe all IO-channels of one connector</Comment>
+      <UserDefElement iecname="pConnector" type="T_POINTER_TO_IoConfigConnector" byteoffset="0" vartype="VAR">
+        <Comment> Pointer to the corresponding connector.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwIoMgrSpecific" type="T_XWORD" byteoffset="4" vartype="VAR">
+        <Comment> IO-manager specific entry.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwNumOfChannels" type="T_DWORD" byteoffset="8" vartype="VAR">
+        <Comment> Number of channels in the channel map list.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="pChannelMapList" type="T_POINTER_TO_IoConfigChannelMap" byteoffset="12" vartype="VAR">
+        <Comment> Pointer to channel map list.</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_IoConfigParameter" size="20" nativesize="20" typeclass="Userdef" pouclass="STRUCTURE" iecname="IoConfigParameter">
+      <Comment>	Parameter description. This entry describes completely a parameter of an connector.</Comment>
+      <UserDefElement iecname="dwParameterId" type="T_DWORD" byteoffset="0" vartype="VAR">
+        <Comment> ID of the parameter. This ID is specified in the device description.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwValue" type="T_XWORD" byteoffset="4" vartype="VAR">
+        <Comment> Value (if is valud &lt; 4 bytes) or a pointer to the value of the parameter.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wType" type="T_WORD" byteoffset="8" vartype="VAR">
+        <Comment> Type class of the parameter. See category "Type class" for detailed information.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wLen" type="T_WORD" byteoffset="10" vartype="VAR">
+        <Comment> Length of the parameter in bits.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwFlags" type="T_DWORD" byteoffset="12" vartype="VAR">
+        <Comment> Parameter value flags.  See category "Parameter value flags" for detailed information. Bit 16 to 31 are used for extended parameters (size exceeding 65535 Bits,8192 Bytes)</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwDriverSpecific" type="T_XWORD" byteoffset="16" vartype="VAR">
+        <Comment> Driver specific entry. Reserved for the usage in the driver.</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_IoConfigTaskMap" size="12" nativesize="12" typeclass="Userdef" pouclass="STRUCTURE" iecname="IoConfigTaskMap">
+      <Comment>	Mapping description for each task.</Comment>
+      <UserDefElement iecname="dwTaskId" type="T_DWORD" byteoffset="0" vartype="VAR">
+        <Comment> Index of the IEC task.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wType" type="T_WORD" byteoffset="4" vartype="VAR">
+        <Comment> Input or output type. See category "Task map types" for detailed information.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wNumOfConnectorMap" type="T_WORD" byteoffset="6" vartype="VAR">
+        <Comment> Number of connector maps int the connector map list.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="pConnectorMapList" type="T_POINTER_TO_IoConfigConnectorMap" byteoffset="8" vartype="VAR">
+        <Comment> Pointer to the connector map list.</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+    <TypeUserDef name="T_PID" size="152" nativesize="176" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="PID">
+      <Comment> Represents a PID controller
+
+ .. note::
+    The PID controller itself measures the elapsed time between two calls, however with a maximum accuracy of milliseconds. This
+    might lead to rough running in case of short cycle times: For example in case of a cycle time of 1ms the PID sometimes might
+    measure 2 ms, sometimes 0 ms. So if possible, for such cases better use ``PID_FIXCYCLE``, where the cycle time can be set precisely.
+    See |PID_FIXCYCLE|
+
+ .. note::
+    Consider that the controller parameters only get applied when used in the manual mode at a start, a reset or at a change down.
+
+ A PID controller continuously calculates an error value e(t)
+ as the difference between a desired set point and a measured process variable. The PID controller applies a correction 
+ based on proportional, integral, and derivative terms (sometimes denoted P, I, and D respectively) 
+ which give their name to the controller type.
+
+ .. image:: @(PID)
+
+ + P accounts for present values of the error. For example, if the error is large and positive, the control output will also be large and positive.
+ + I accounts for past values of the error. For example, if the current output is not sufficiently strong, the integral of the error will accumulate over time, and the controller will respond by applying a stronger action.
+ + D accounts for possible future trends of the error, based on its current rate of change.[1]
+
+ As a PID controller relies only on the measured process variable, not on knowledge of the underlying process,
+ it is broadly applicable. By tuning the three parameters of the model, a PID controller can deal with 
+ specific process requirements. The response of the controller can be described in terms of its responsiveness
+ to an error, of the degree to which the system overshoots a setpoint, and of the degree of any system oscillation.
+ The use of the PID algorithm does not guarantee optimal control of the system or even its stability.
+
+ ``Y_OFFSET``, ``Y_MIN`` and ``Y_MAX`` serve for transformation of the manipulated variable within a prescribed range.
+ ``MANUAL`` can be used to switch to manual operation; ``RESET`` can be used to re-initialize the controller.
+ In normal operation (``MANUAL = RESET = LIMITS_ACTIVE = FALSE``) the controller calculates the controller error e as difference from ``SET_POINT –
+ ACTUAL``, generates the derivation with respect to time :math:`\frac{\delta e}{\delta t}` and stores these values internally.
+
+ The output ``Y`` is the manipulated variable unlike the PD controller contains an additional integral part, 
+ and is calculated as follows: :math:`Y = KP \cdot (e + \frac{1}{TN} \int e dt + TV \frac{\delta e}{\delta t}) + Y_{OFFSET}`
+ So besides the P-part also the current change of the controller error (D-part) and the history of the controller error (I-part) influence the manipulated
+ variable. The PID controller can be easily converted to a PI-controller by setting ``TV=0``.
+ Because of the additional integral part, an overflow can come about by incorrect parameterization of the controller, if the integral of the error e becomes
+ to great. Therefore for the sake of safety a BOOLean output called OVERFLOW is present, which in this case would have the value TRUE. This only
+ will happen if the control system is instable due to incorrect parameterization. At the same time, the controller will be suspended and will only be
+ activated again by re-initialization.
+  
+ .. note::
+    As long as the limitation for the manipulated variable (``Y_MIN``, ``Y_MAX``) is active, the integral part will be adapted, like if the history
+    of the input values had automatically effected the limited output value. If this behaviour is not wanted, the following workaround is
+    possible: Switch off the limitation at the PID controller (``Y_MIN&gt;=Y_MAX``) and instead apply the ``LIMIT`` operator (IEC standard) on
+    output value ``Y`` (see an example in the figure below).
+
+ .. note::
+    It is not necessary to readjust the controller parameters (KP, TN, TV) if the cycle time changes.
+
+ Temperature control with PID and LIMIT
+ --------------------------------------
+
+ See in the following figure a simple example of using the PID module for temperature control and in combination with the ``LIMIT`` operator. The input of
+ the actual temperature is simulated by giving a constant value via ActualTemperature.
+
+ .. image:: @(PIDExample)
+</Comment>
+      <UserDefElement iecname="ACTUAL" type="T_REAL" byteoffset="0" vartype="VAR_INPUT">
+        <Comment> Current value, process variable</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="SET_POINT" type="T_REAL" byteoffset="4" vartype="VAR_INPUT">
+        <Comment> Desired value, set point</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="KP" type="T_REAL" byteoffset="8" vartype="VAR_INPUT">
+        <Comment> Proportionality const. P</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="TN" type="T_REAL" byteoffset="12" vartype="VAR_INPUT">
+        <Comment> Reset time I [sec]</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="TV" type="T_REAL" byteoffset="16" vartype="VAR_INPUT">
+        <Comment> Rate time, derivative time D [sec]. If set to 0, then it works as PI controller</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Y_MANUAL" type="T_REAL" byteoffset="20" vartype="VAR_INPUT">
+        <Comment> ``Y`` is set to this value as long as ``MANUAL`` = ``TRUE``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Y_OFFSET" type="T_REAL" byteoffset="24" vartype="VAR_INPUT">
+        <Comment> Offset for manipulated variable</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Y_MIN" type="T_REAL" byteoffset="28" vartype="VAR_INPUT">
+        <Comment> Minimum value for manipulated variable</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Y_MAX" type="T_REAL" byteoffset="32" vartype="VAR_INPUT">
+        <Comment> Maximum value for manipulated variable</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="MANUAL" type="T_BOOL" byteoffset="36" vartype="VAR_INPUT">
+        <Comment> | ``TRUE``: Manual: ``Y`` is not influenced by controller
+ | ``FALSE``: Controller determines ``Y``</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="RESET" type="T_BOOL" byteoffset="37" vartype="VAR_INPUT">
+        <Comment> ``TRUE``: Set ``Y`` output to ``Y_OFFSET`` and reset integral part</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="Y" type="T_REAL" byteoffset="40" vartype="VAR_OUTPUT">
+        <Comment> Manipulated variable, set value</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="LIMITS_ACTIVE" type="T_BOOL" byteoffset="44" vartype="VAR_OUTPUT">
+        <Comment> ``TRUE``: ``Y`` has exceeded the given limits ``Y_MIN``, ``Y_MAX`` and is limited to these values</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="OVERFLOW" type="T_BOOL" byteoffset="45" vartype="VAR_OUTPUT">
+        <Comment> Overflow in integral part</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="CLOCK" type="T_TON" byteoffset="48" vartype="VAR" />
+      <UserDefElement iecname="I" type="T_INTEGRAL" byteoffset="64" vartype="VAR" />
+      <UserDefElement iecname="D" type="T_DERIVATIVE" byteoffset="84" vartype="VAR" />
+      <UserDefElement iecname="TMDIFF" type="T_DWORD" byteoffset="124" vartype="VAR" />
+      <UserDefElement iecname="ERROR" type="T_REAL" byteoffset="128" vartype="VAR" />
+      <UserDefElement iecname="_Init" type="T_BOOL" byteoffset="132" vartype="VAR" />
+      <UserDefElement iecname="Y_ADDOFFSET" type="T_REAL" byteoffset="136" vartype="VAR" />
+      <UserDefElement iecname="KPcopy" type="T_REAL" byteoffset="140" vartype="VAR" />
+      <UserDefElement iecname="TNcopy" type="T_REAL" byteoffset="144" vartype="VAR" />
+      <UserDefElement iecname="TVcopy" type="T_REAL" byteoffset="148" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_Pump_kontrolTemp" size="40" nativesize="68" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="Pump_kontrolTemp">
+      <UserDefElement iecname="work" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT" />
+      <UserDefElement iecname="x" type="T_INT" byteoffset="2" vartype="VAR" />
+      <UserDefElement iecname="t1_brakePump" type="T_TON" byteoffset="4" vartype="VAR" />
+      <UserDefElement iecname="t2_speedOnPump" type="T_TON" byteoffset="20" vartype="VAR" />
+      <UserDefElement iecname="open_valve" type="T_BOOL" byteoffset="36" vartype="VAR" />
+      <UserDefElement iecname="close_value" type="T_BOOL" byteoffset="37" vartype="VAR" />
+      <UserDefElement iecname="y" type="T_INT" byteoffset="38" vartype="VAR" />
+    </TypeUserDef>
+    <TypeSimple name="T_RTS_IEC_HANDLE" size="4" swapsize="4" typeclass="Pointer" iecname="RTS_IEC_HANDLE" aliasedtype="T_POINTER_TO_BYTE" aliasediecname="POINTER TO BYTE" />
+    <TypeUserDef name="T_AnalogOutput" size="188" nativesize="216" typeclass="Userdef" pouclass="FUNCTION_BLOCK" iecname="AnalogOutput">
+      <UserDefElement iecname="manualMode" type="T_BOOL" byteoffset="0" vartype="VAR_INPUT" />
+      <UserDefElement iecname="start" type="T_BOOL" byteoffset="1" vartype="VAR_INPUT" />
+      <UserDefElement iecname="input" type="T_REAL" byteoffset="4" vartype="VAR_INPUT" />
+      <UserDefElement iecname="P" type="T_REAL" byteoffset="8" vartype="VAR_INPUT" />
+      <UserDefElement iecname="I" type="T_REAL" byteoffset="12" vartype="VAR_INPUT" />
+      <UserDefElement iecname="D" type="T_REAL" byteoffset="16" vartype="VAR_INPUT" />
+      <UserDefElement iecname="setpoint" type="T_REAL" byteoffset="20" vartype="VAR_INPUT" />
+      <UserDefElement iecname="manualValue" type="T_INT" byteoffset="24" vartype="VAR_INPUT" />
+      <UserDefElement iecname="value" type="T_INT" byteoffset="26" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="errorCode" type="T_UINT" byteoffset="28" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="status" type="T_UINT" byteoffset="30" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="out" type="T_BOOL" byteoffset="32" vartype="VAR_OUTPUT" />
+      <UserDefElement iecname="PID" type="T_PID" byteoffset="36" vartype="VAR" />
+    </TypeUserDef>
+    <TypeUserDef name="T_IoConfigConnector" size="24" nativesize="24" typeclass="Userdef" pouclass="STRUCTURE" iecname="IoConfigConnector">
+      <Comment>		Connector information. Each device is described completely as a set of one input- and one or more output-conenctors. </Comment>
+      <UserDefElement iecname="wType" type="T_WORD" byteoffset="0" vartype="VAR">
+        <Comment> Type of the connector. See category "Connector types" for detailed information.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="wOptions" type="T_WORD" byteoffset="2" vartype="VAR">
+        <Comment> Connector options. See category "Connector options" for detailed information.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwFlags" type="T_DWORD" byteoffset="4" vartype="VAR">
+        <Comment> Connector flags. See category "Connector flags" for detailed information.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="hIoDrv" type="T_RTS_IEC_HANDLE" byteoffset="8" vartype="VAR">
+        <Comment> Registered instance handle of the IO-driver, that operates this device respectively this connector.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="dwNumOfParameters" type="T_DWORD" byteoffset="12" vartype="VAR">
+        <Comment> Number of parameters in the parameter list.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="pParameterList" type="T_POINTER_TO_IoConfigParameter" byteoffset="16" vartype="VAR">
+        <Comment> Pointer to the parameter list, that contains all parameters of this connector.</Comment>
+      </UserDefElement>
+      <UserDefElement iecname="pFather" type="T_POINTER_TO_IoConfigConnector" byteoffset="20" vartype="VAR">
+        <Comment> Pointer to the father connector to describe the device tree.</Comment>
+      </UserDefElement>
+    </TypeUserDef>
+  </TypeList>
+  <NodeList>
+    <Node name="Application" nodeflags="NodeTypeBranchNode BranchNodeApplicationName">
+      <Node name="Blending" nodeflags="NodeTypeBranchNode SigTypeProgram">
+        <Node name="blendDone" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="blendingDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="close_value" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="comfirmBlending" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="confirmHotWater_1" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmPushing" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="confirmSugar" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="confirmSyrup" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="conformOper_waterHot" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="control_enabel_CountSirop" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="counter1" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="counter2" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="counter3" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="counter_sirop" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="countSiropDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="f1" nodeflags="SigTypeProgram ExportedVariable" type="T_F_TRIG" access="ReadWrite" />
+        <Node name="f2" nodeflags="SigTypeProgram ExportedVariable" type="T_F_TRIG" access="ReadWrite" />
+        <Node name="fbRtrig" nodeflags="SigTypeProgram ExportedVariable" type="T_R_TRIG" access="ReadWrite" />
+        <Node name="fillingDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="heatingTemperature" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="hist" nodeflags="SigTypeProgram ExportedVariable" type="T_HYSTERESIS" access="ReadWrite" />
+        <Node name="Ok_OperatoromOverloadHotWater" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="open_valve" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pumpH3ControlTemp" nodeflags="SigTypeProgram ExportedVariable" type="T_Pump_kontrolTemp" access="ReadWrite" />
+        <Node name="pumpingTimer" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="pushingDone" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="pushingTimer" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="start_filling" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="syrupDone" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="syrupTimer" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="syrupWaterDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="t1_brakePump" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="t2_speedOnPump" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="T_step20" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="T_step30" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="temperatureForSugarDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="timeToTimer" nodeflags="SigTypeProgram ExportedVariable" type="T_UDINT" access="ReadWrite" />
+        <Node name="urKotlaupper" nodeflags="SigTypeProgram ExportedVariable" type="T_SR" access="ReadWrite" />
+        <Node name="uroven_HotWater" nodeflags="SigTypeProgram ExportedVariable" type="T_TOF" access="ReadWrite" />
+        <Node name="waterDone" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="waterTimer" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="windows_UrovenOverloadHotWater" nodeflags="SigTypeProgram ExportedVariable" type="T_SR" access="ReadWrite" />
+        <Node name="x" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="y" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+      </Node>
+      <Node name="CIP" nodeflags="NodeTypeBranchNode SigTypeProgram">
+        <Node name="blendStage" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="blink1" nodeflags="SigTypeProgram ExportedVariable" type="T_BLINK" access="ReadWrite" />
+        <Node name="blink2" nodeflags="SigTypeProgram ExportedVariable" type="T_BLINK" access="ReadWrite" />
+        <Node name="cip" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="cipDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="counter" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="counterDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="ftrig1" nodeflags="SigTypeProgram ExportedVariable" type="T_F_TRIG" access="ReadWrite" />
+        <Node name="heating" nodeflags="SigTypeProgram ExportedVariable" type="T_HYSTERESIS" access="ReadWrite" />
+        <Node name="pumping1done" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pumping2done" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pumpingStage" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="syrupStage" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="timer1" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="timer1condition" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="timer2" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="timer2condition" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="timer3" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+      </Node>
+      <Node name="CIP_Short" nodeflags="NodeTypeBranchNode SigTypeProgram">
+        <Node name="blendStage" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="blink1" nodeflags="SigTypeProgram ExportedVariable" type="T_BLINK" access="ReadWrite" />
+        <Node name="blink2" nodeflags="SigTypeProgram ExportedVariable" type="T_BLINK" access="ReadWrite" />
+        <Node name="cip" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="cip_shert_done" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="cipDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="counter" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="counterDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="ftrig1" nodeflags="SigTypeProgram ExportedVariable" type="T_F_TRIG" access="ReadWrite" />
+        <Node name="heat_done" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="heating" nodeflags="SigTypeProgram ExportedVariable" type="T_HYSTERESIS" access="ReadWrite" />
+        <Node name="pumping1done" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pumping2done" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pumpingStage" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="sliv_cip" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="syrupStage" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="tempTankSirop_TT3" nodeflags="SigTypeProgram ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="timer1" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="timer1condition" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="timer2" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="timer2condition" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="timer3" nodeflags="SigTypeProgram ExportedVariable" type="T_TON" access="ReadWrite" />
+        <Node name="timerCleanDiarator" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="timerCleanTank" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="timerCleanTeploobmen" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="vater_for_cip" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+      </Node>
+      <Node name="Constants" nodeflags="NodeTypeBranchNode SigTypeGvl">
+        <Attribute>linkalways:=</Attribute>
+        <Attribute>qualified_only:=</Attribute>
+        <Node name="CompilerVersion" nodeflags="SigTypeGvl ExportedVariable" type="T_VERSION" access="Read">
+          <Comment> the compiler version as defined in the build options (not OEM Customized Version!)</Comment>
+        </Node>
+        <Node name="RuntimeVersion" nodeflags="SigTypeGvl ExportedVariable" type="T_VERSION" access="Read">
+          <Comment> the runtime version number as defined by the device description.</Comment>
+        </Node>
+      </Node>
+      <Node name="Data" nodeflags="NodeTypeBranchNode SigTypeGvl">
+        <Attribute>qualified_only:=</Attribute>
+        <Node name="breakers" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="emergency" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="FT1_pulse" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="FT2_pulse" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="run" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="stCV1" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogOutputs" access="ReadWrite" />
+        <Node name="stCV2" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogOutputs" access="ReadWrite" />
+        <Node name="stCV3" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogOutputs" access="ReadWrite" />
+        <Node name="stFT1" nodeflags="SigTypeGvl ExportedVariable" type="T_Counters" access="ReadWrite" />
+        <Node name="stFT2" nodeflags="SigTypeGvl ExportedVariable" type="T_Counters" access="ReadWrite" />
+        <Node name="stH1" nodeflags="SigTypeGvl ExportedVariable" type="T_Pumps" access="ReadWrite" />
+        <Node name="stH2" nodeflags="SigTypeGvl ExportedVariable" type="T_Pumps" access="ReadWrite" />
+        <Node name="stH3" nodeflags="SigTypeGvl ExportedVariable" type="T_Pumps" access="ReadWrite" />
+        <Node name="stH4" nodeflags="SigTypeGvl ExportedVariable" type="T_Pumps" access="ReadWrite" />
+        <Node name="stH5" nodeflags="SigTypeGvl ExportedVariable" type="T_Pumps" access="ReadWrite" />
+        <Node name="stH6" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stH7" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stLT1" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stLT10" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensors" access="ReadWrite" />
+        <Node name="stLT11" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensors" access="ReadWrite" />
+        <Node name="stLT2" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stLT3" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stLT4" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stLT5" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stLT6" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stLT7" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stM1" nodeflags="SigTypeGvl ExportedVariable" type="T_Pumps" access="ReadWrite" />
+        <Node name="stM2" nodeflags="SigTypeGvl ExportedVariable" type="T_Pumps" access="ReadWrite" />
+        <Node name="stP1" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stP2" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensors" access="ReadWrite" />
+        <Node name="stSV1" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite">
+          <Comment>Создаем экземпляры структуры данных</Comment>
+        </Node>
+        <Node name="stSV10" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV11" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV12" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV13" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV14" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV15" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV16" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV17" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV18" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV19" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV2" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV20" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV21" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV22" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV23" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV24" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV25" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV26" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV27" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV28" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV29" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV3" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV30" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV31" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV32" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV33" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV34" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV4" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV5" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV6" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV7" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV8" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stSV9" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutputs" access="ReadWrite" />
+        <Node name="stTT1" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensors" access="ReadWrite" />
+        <Node name="stTT2" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensors" access="ReadWrite" />
+        <Node name="stTT3" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensors" access="ReadWrite" />
+        <Node name="stTT4" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensors" access="ReadWrite" />
+        <Node name="stTT5" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensors" access="ReadWrite" />
+      </Node>
+      <Node name="Devices" nodeflags="NodeTypeBranchNode SigTypeGvl">
+        <Attribute>qualified_only:=</Attribute>
+        <Node name="CV1" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogOutput" access="ReadWrite" />
+        <Node name="CV2" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogOutput" access="ReadWrite" />
+        <Node name="CV3" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogOutput" access="ReadWrite" />
+        <Node name="FT1" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="FT2" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="H1" nodeflags="SigTypeGvl ExportedVariable" type="T_Pump" access="ReadWrite" />
+        <Node name="H2" nodeflags="SigTypeGvl ExportedVariable" type="T_Pump" access="ReadWrite" />
+        <Node name="H3" nodeflags="SigTypeGvl ExportedVariable" type="T_Pump" access="ReadWrite" />
+        <Node name="H4" nodeflags="SigTypeGvl ExportedVariable" type="T_Pump" access="ReadWrite" />
+        <Node name="H5" nodeflags="SigTypeGvl ExportedVariable" type="T_Pump" access="ReadWrite" />
+        <Node name="H6" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="H7" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="LT1" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="LT10" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="LT11" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="LT2" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="LT3" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="LT4" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="LT5" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="LT6" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="LT7" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="M1" nodeflags="SigTypeGvl ExportedVariable" type="T_Pump" access="ReadWrite" />
+        <Node name="M2" nodeflags="SigTypeGvl ExportedVariable" type="T_Pump" access="ReadWrite" />
+        <Node name="P1" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="P2" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalSensor" access="ReadWrite" />
+        <Node name="SV1" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite">
+          <Comment>Создаем экземпляры функциональных блоков</Comment>
+        </Node>
+        <Node name="SV10" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV11" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV12" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV13" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV14" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV15" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV16" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV17" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV18" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV19" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV2" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV20" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV21" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV22" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV23" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV24" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV25" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV26" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV27" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV28" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV29" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV3" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV30" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV31" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV32" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV33" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV34" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV4" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV5" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV6" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV7" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV8" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="SV9" nodeflags="SigTypeGvl ExportedVariable" type="T_DigitalOutput" access="ReadWrite" />
+        <Node name="TT1" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="TT2" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="TT3" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="TT4" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+        <Node name="TT5" nodeflags="SigTypeGvl ExportedVariable" type="T_AnalogSensor" access="ReadWrite" />
+      </Node>
+      <Node name="GlobalVars" nodeflags="NodeTypeBranchNode SigTypeGvl">
+        <Attribute>qualified_only:=</Attribute>
+        <Node name="a" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="askTempOperator" nodeflags="SigTypeGvl ExportedVariable" type="T_RS" access="ReadWrite">
+          <Comment> запрос оператора какой водой наполняем</Comment>
+        </Node>
+        <Node name="bCV1_Auto" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="blendingConfirmed" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="blendPumpingTemperature" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="button_vacuum_start" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="chek_box_inset" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite">
+          <Comment> проверка настроек разрешения продувки</Comment>
+        </Node>
+        <Node name="cip" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="cip_short" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmBlendingWindow" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmEndingWindow" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmHotWater" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmPushingWindow" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmSaturatorWindow" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmSugarWindow" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="confirmSyrupWindow" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="conform_2blend" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="counterSirop_ENABEL" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="countSiropForBlend" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="endingConfirmed" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="Finish_Programm" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite">
+          <Comment>вызов окна конец программы</Comment>
+        </Node>
+        <Node name="finish_sip_windows" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="finishProkachka" nodeflags="SigTypeGvl ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="getBlend" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="Hot_tempWaterFor_shortCip" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="iH1_speed" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="iH2_speed" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="iH3_speed" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="iH4_speed" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="iH5_speed" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="iM1_speed" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="iM2_speed" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="iSteps" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="iSyrupTime" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="prepareForSugarTemperature" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="produktConform" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="produvka" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pumpDone" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pushingConfirmed" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="rCV1_Cf" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV1_D" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV1_I" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV1_P" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV2_D" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV2_I" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV2_P" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV3_D" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV3_I" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rCV3_P" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rH3_D" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rH3_I" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rH3_P" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rH3_Set" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT1_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT2_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT3_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT4_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT5_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT6_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT7_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT8_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rLT9_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV10_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV11_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV12_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV13_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV14_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV15_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV16_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV17_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV18_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV19_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV1_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV20_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV21_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV22_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV23_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV24_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV25_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV26_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV27_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV28_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV29_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV2_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV30_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV31_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV32_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV3_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV4_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV5_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV6_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV7_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV8_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="rSV9_delay" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="saturatorConfirmed" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="saturatorWaterFinish" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="sp" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="start" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="stop" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="sugarConfirmed" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="syrupConfirmed" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="syrupPumpingTemperature" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="syrupTemperature" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="syrupTime" nodeflags="SigTypeGvl ExportedVariable" type="T_UINT" access="ReadWrite" />
+        <Node name="tempWaterForKupaj" nodeflags="SigTypeGvl ExportedVariable" type="T_REAL" access="ReadWrite" />
+        <Node name="toAuto" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="toManual" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="useSaturation" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="Vacuum_redy" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="vacuumConfirm" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="waterForBlend" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="waterForProtalkivanie" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="waterForSyrup" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="waterTempKupaj" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="wind_2Blend" nodeflags="SigTypeGvl ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="x" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="y" nodeflags="SigTypeGvl ExportedVariable" type="T_BOOL" access="ReadWrite" />
+      </Node>
+      <Node name="IoConfig_Globals" nodeflags="NodeTypeBranchNode SigTypeGvl">
+        <Attribute>global_init_slot:=60000</Attribute>
+        <Attribute>signature_flag:=1073741824</Attribute>
+        <Node name="nIoConfigTaskMapCount" nodeflags="SigTypeGvl ExportedVariable" type="T_DINT" access="ReadWrite">
+          <Attribute>message_guid:=33401fd4-7a09-47d1-88a0-fc194d08d415</Attribute>
+        </Node>
+        <Node name="pIoConfigTaskMap" nodeflags="SigTypeGvl ExportedVariable" type="T_POINTER_TO_IoConfigTaskMap" access="ReadWrite">
+          <Attribute>message_guid:=33401fd4-7a09-47d1-88a0-fc194d08d415</Attribute>
+        </Node>
+      </Node>
+      <Node name="main" nodeflags="NodeTypeBranchNode SigTypeProgram">
+        <Node name="counterOne" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="counterTwo" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="Ok_OperatoromOverloadHotWater" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="urKotlaupper" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="uroven_HotWater" nodeflags="SigTypeProgram ExportedVariable" type="T_TOF" access="ReadWrite" />
+        <Node name="windows_UrovenOverloadHotWater" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+      </Node>
+      <Node name="RetainVars" nodeflags="NodeTypeBranchNode SigTypeGvl">
+        <Attribute>authentification:=d433c4d1-208a-4b7a-b4ba-e3c77e67e46b</Attribute>
+        <Attribute>checksum_override:=3323823160</Attribute>
+        <Attribute>checksumnoinit_override:=1429908644</Attribute>
+        <Attribute>dummy:=1</Attribute>
+        <Attribute>init_related_code:=912ca520-271a-4b07-8747-d17fa59a0add</Attribute>
+        <Attribute>vfinitonly:=</Attribute>
+        <Node name="waterTempKupaj" nodeflags="SigTypeGvl ExportedVariable" type="T_INT" access="ReadWrite">
+          <Attribute>order_in_persistent_editor:=64</Attribute>
+          <Attribute>Checksum_Type:=178117354</Attribute>
+        </Node>
+      </Node>
+      <Node name="Saturator" nodeflags="NodeTypeBranchNode SigTypeProgram">
+        <Node name="blowing" nodeflags="SigTypeProgram ExportedVariable" type="T_BLINK" access="ReadWrite" />
+        <Node name="checkOnVakuum" nodeflags="SigTypeProgram ExportedVariable" type="T_TP" access="ReadWrite" />
+        <Node name="counter" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="counter_prokachka" nodeflags="SigTypeProgram ExportedVariable" type="T_CTU" access="ReadWrite" />
+        <Node name="firstPuskVacuum" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="i" nodeflags="SigTypeProgram ExportedVariable" type="T_SINT" access="ReadWrite" />
+        <Node name="operatorProkachka" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="pampvacOnce" nodeflags="SigTypeProgram ExportedVariable" type="T_INT" access="ReadWrite" />
+        <Node name="pidH3" nodeflags="SigTypeProgram ExportedVariable" type="T_PID" access="ReadWrite" />
+        <Node name="preparingSaturator" nodeflags="SigTypeProgram ExportedVariable" type="T_SR" access="ReadWrite" />
+        <Node name="productDone" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="Prokachka" nodeflags="SigTypeProgram ExportedVariable" type="T_SR" access="ReadWrite" />
+        <Node name="rtrig" nodeflags="SigTypeProgram ExportedVariable" type="T_R_TRIG" access="ReadWrite" />
+        <Node name="saturation" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="saturationDone" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="saturatorConfirm" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="vacPumpDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+        <Node name="valveManager" nodeflags="SigTypeProgram ExportedVariable" type="T_RS" access="ReadWrite" />
+        <Node name="waterDone" nodeflags="SigTypeProgram ExportedVariable" type="T_BOOL" access="ReadWrite" />
+      </Node>
+    </Node>
+  </NodeList>
+</Symbolconfiguration>
